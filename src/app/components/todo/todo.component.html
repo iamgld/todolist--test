@@ -1,0 +1,59 @@
+<article class="field has-addons">
+
+  <label class="control">
+    <textarea [(ngModel)]="todo.content" (keyup)="writeLetterError()" [ngClass]="{'u-edit': todo.edit === true}"
+      class="textarea is-dark" maxlength="280" placeholder="Write the new todo" name="content" rows="1"></textarea>
+  </label>
+
+  <div *ngIf="todo.edit" class="control">
+    <button (click)="addTodo()" class="button is-outlined is-dark has-text-info">
+      <span class="icon">
+        <i class="fas fa-paper-plane"></i>
+      </span>
+    </button>
+  </div>
+
+</article>
+
+<p *ngIf="todo.alertMessage.show" class="help is-danger">{{todo.alertMessage.message}}</p>
+
+
+<article class="Login media">
+
+  <figure class="media-left">
+    <p class="image is-48x48">
+      <!-- <img src="https://bulma.io/images/placeholders/128x128.png"> -->
+      <img src="{{todo.owner.picture}}">
+    </p>
+  </figure>
+
+  <div class="media-content">
+    <div class="content">
+      <p>
+        {{todo.owner.name}}
+        <br>
+        {{todo.owner.email}}
+        <br>
+      </p>
+    </div>
+  </div>
+
+  <div class="media-right">
+    <button (click)="checkLogin()" [ngClass]="{'is-info': !todo.owner.isLogin, 'is-danger': todo.owner.isLogin}"
+      class="button">
+      <span class="icon">
+        <i [ngClass]="{'fa-sign-in-alt': !todo.owner.isLogin, 'fa-sign-out-alt': todo.owner.isLogin}" class="fas"></i>
+      </span>
+      <span>
+        {{todo.owner.isLogin ? 'logout' : 'login'}}
+      </span>
+    </button>
+  </div>
+
+</article>
+
+<article *ngIf="!todo.owner.isLogin" class="message is-danger">
+  <p class="message-body is-size-7">
+    This user is generic, do not forget to register so that your todo's are saved for later sessions
+  </p>
+</article>

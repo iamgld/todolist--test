@@ -1,0 +1,49 @@
+<ul class="Todolist">
+
+  <article *ngIf="emptyList" class="message is-danger">
+    <p class="message-body is-size-7">
+      You do not have any items on your to-do list
+    </p>
+  </article>
+
+  <li *ngFor="let todo of todos">
+
+    <section class="field has-addons Todolist-item">
+      <div class="control">
+        <button (click)="checkTodo(todo,user)" [ngClass]="{'has-text-primary': todo.check}"
+          class="button is-outlined is-dark">
+
+          <span class="icon">
+            <i [ngClass]="{'fa-square': !todo.check, 'fa-check-square': todo.check}" class="far"></i>
+          </span>
+
+        </button>
+      </div>
+
+      <label class="control">
+        <textarea [(ngModel)]="todo.content" (keyup)="writeLetterError(todo)" class="textarea is-dark" maxlength="280"
+          minlength="3" name="content" rows="1"></textarea>
+      </label>
+
+      <div *ngIf="todo.edit" class="control">
+        <button (click)="updateTodo(todo,user)" class="button is-outlined is-dark has-text-info">
+          <span class="icon">
+            <i class="far fa-edit"></i>
+          </span>
+        </button>
+      </div>
+
+      <div class="control">
+        <button (click)="deleteTodo(todo,user)" class="button is-outlined is-dark has-text-danger">
+          <span class="icon">
+            <i class="far fa-trash-alt"></i>
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <p *ngIf="todo.alertMessage.show" class="help is-danger">{{todo.alertMessage.message}}</p>
+
+  </li>
+
+</ul>
